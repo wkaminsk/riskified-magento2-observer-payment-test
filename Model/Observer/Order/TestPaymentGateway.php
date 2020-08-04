@@ -16,6 +16,11 @@ class TestPaymentGateway implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        $observer->getPaymentData()->transaction_id = 1111;
+        /** @var \Magento\Sales\Api\Data\OrderInterface $order */
+        $order = $observer->getOrder();
+
+        if (strstr($order->getCustomerEmail(), "+observertest")) {
+            $observer->getPaymentData()->transaction_id = 1111;
+        }
     }
 }
